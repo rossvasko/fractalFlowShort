@@ -265,7 +265,7 @@
 \SetAlgoCaptionSeparator{.}
 
 
-\title{Visualizing flow fields using fractal dimensions}
+\title{Visualizing Flow Fields Using Fractal Dimensions}
 
 %% This is how authors are specified in the journal style
 
@@ -368,7 +368,7 @@ View points of streamlines are evaluated in \cite{marchesin} by analyzing the am
 Streamline methods based on concepts of entropy are discussed in \cite{shen} and \cite{lee}.
 
 Critical points of the flow field are analyzed in \cite{ye} and different seeding strategies are used depending on the behavior near the critical points.
-In \cite{salzbrunn}, various definitions are constructed for different flow field features and the features are searched for
+In \cite{salzbrunn}, various definitions are constructed for different flow field features and the features are searched for in the flow field.
 Similarly, various features are defined in \cite{heiberg} and the vectors of the flow field are examined to see if they meet the requirements of various properties.
 In all \cite{sadarjoen1999}, \cite{sadarjoen1998}, and \cite{zhong} features of a vortex are defined and then searched for in the flow field.
 \cite{mahrous} does segment the flow field generally, but this method does not supply a way of quantifying the complexity of flow field regions.
@@ -442,7 +442,7 @@ Once constructed, the streamline complexity grid can be used in visualization te
 We describe the different techniques that are possible with the streamline complexity grid.
 
 \subsection{Streamline filtering by value}
-To remove streamlines in the flow field and to reduce clutter, the user is filter streamlines by their measured complexity value.
+To remove streamlines in the flow field and to reduce clutter, the user can filter streamlines by their measured complexity value.
 The user is able to choose two values, $a$ and $b$ where $a < b$, and only display streamlines with a complexity between the chosen values. 
 Specifically, the streamline $\zeta_p$ will be displayed only if $a \leq \phi_w(p) \leq b$.
 The constants allow the user to choose the level of streamline complexity that they will view.
@@ -520,11 +520,11 @@ Example of isosurfaces of the scalar complexity values and gradient magnitudes a
         \centering
                 \begin{minipage}{0.47\linewidth}
                         \small \centering
-                        \includegraphics[height = 1.47\linewidth]{Images/iso_crop.png}\\(a)
+                        \includegraphics[height = 1.2\linewidth]{Images/iso_crop.png}\\(a)
                 \end{minipage}
                 \begin{minipage}{0.47\linewidth}
                         \small \centering
-                        \includegraphics[height = 1.47\linewidth]{Images/grad_crop.png}\\(b)
+                        \includegraphics[height = 1.2\linewidth]{Images/grad_crop.png}\\(b)
                 \end{minipage}
         \caption{Example visualizations with isosurfaces. (a) contains the scalar value isosurface enclosing high complexity regions. (b) contains the gradient isosurface enclosing regions of high complexity change.}
         \label{fig:iso}
@@ -536,21 +536,18 @@ In this section we will demonstrate how the previous described techniques can en
 Explanations and figures are given to show the advantages and features given by our algorithms.
 
 The algorithm was implemented in C++ using The Visualization Toolkit (VTK) across two separate programs.
-The first program has been created to generate streamlines, computer complexity measurements, and compute the streamline complexity grid and then output this information into files.
-Then another program takes the output files as input and allows the user to interact with the streamlines and the streamline complexity grid.
-The second program allows for a real-time interactivity with the flow data set.
+The first program has been created to generate streamlines, computer complexity measurements, and compute the streamline complexity grid and then output this information.
+Then another program takes the output files as input and allows the user to interact with the streamlines and the streamline complexity grid in real-time.
 
 The previously described algorithms and techniques are applied to the Solar Plume data set.
-The Solar Plume data is a $126 \times 126 \times 512$ vector field data set that was provided by (who?).
+The Solar Plume data is a $126 \times 126 \times 512$ vector field data set.
 This data set has many different regions of varying flow complexity.
 Central regions of the flow tend to be more laminar with vortices near the boundaries of the data set.
 These regions are able to be identified and highlighted by our algorithm.
 
 A filtering of the streamlines produced by considering the complexity measurements of the streamline given by our algorithm along with isosurfaces is displayed in Fig. \ref{fig:plume_lines}.a.
 The filtering drastically reduces the clutter in the visualization and makes the regions of interest much more clear to the user.
-To filter the streamlines in the plume data set, we are using the local maximum filtering as well as only showing the streamlines above a complexity value near 1.6.
-The streamlines are also colored by complexity, with the red streamlines being the most complex and often contain vortices.
-While the green and less complex streamlines only contain mild turbulence through the line.
+The streamlines are also colored by complexity, with the red streamlines being the most complex and often contain vortices and green streamlines being less complex.
 The aqua isosurface in this rendering is set to a value near 1.6 to enclose the complex regions of the line.
 Additionally, the purple isosurface is the gradient isosurfaces and highlights regions around vortices that have a high change in complexity.
 
@@ -562,13 +559,13 @@ Rather than manually attempting to identify which regions of the flow field exhi
         \centering
                	\begin{minipage}{0.47\linewidth}
                       	\centering \small
-                        \includegraphics[height = 2\linewidth]{Images/plume_grad_crop.png}\\(a) Solar Plume filtered.
+                        \includegraphics[height = 2\linewidth]{Images/plume_grad_crop.png}\\(a) Solar Plume filtered
                 \end{minipage}
                 \begin{minipage}{0.47\linewidth}
                         \centering \small
-                        \includegraphics[height = 2\linewidth]{Images/plume_plane_crop.png}\\(a) Solar Plume with plane.
+                        \includegraphics[height = 2\linewidth]{Images/plume_plane_crop.png}\\(a) Solar Plume with plane
                 \end{minipage}
-        \caption{Example of how filtering increases the visibility of flow field features in the Solar Plume data set. (a) displays the set of streamlines filtered by complexity measurements from an original data set. There is also an isosurface surrounding the complex regions. In (b), the plane allows the viewer to see the different regions of high and low complexity.}
+        \caption{Example of how filtering increases the visibility of flow field features in the Solar Plume data set. (a) displays the set of streamlines filtered by complexity measurements from an original data set. In (b), the plane allows the viewer to see the different regions of high and low complexity.}
         \label{fig:plume_lines}
 \end{figure}
 
@@ -578,7 +575,7 @@ In this paper we proposed a method of filtering streamlines and identifying comp
 We described a method of box counting dimension for streamlines to identify the streamlines that have a space filling pattern and are complex.
 Then using this box counting dimension, we are able to make a streamline complexity grid that has scalar values to represent the complexities of different regions.
 The streamline complexity grid along with the streamline box counting dimensions allow for many visualization techniques such as filtering by local maximums and isosurfaces to allow the viewer to identify interesting parts of a flow field.
-We then applied these filtering methods and visualization techniques to various data set and showed how they created a quality visualization.
+We then applied these filtering methods and visualization techniques to a data set and showed how they created a quality visualization.
 
 
 \clearpage
