@@ -269,11 +269,13 @@
 
 %% This is how authors are specified in the journal style
 
-%% indicate IEEE Member or Student Member in form indicated below
-\author{Anonymous}
-%%\authorfooter{
-%%The Ohio State University. E-mail: vasko.38@osu.edu, shen.94@osu.edu
-%% and wenger.4@osu.edu}
+\author[Han-Wei Shen, Ross Vasko, \& Rephael Wenger]
+	{Han-Wei Shen, Ross Vasko, and Rephael Wenger
+	\\
+	The Ohio State University, Columbus, OH, USA
+	}
+
+
 
 \begin{document}
 
@@ -281,22 +283,20 @@
 
 \begin{abstract}
 Streamlines are a popular way of visualizing flow in vector fields.
-A major challenge in streamline visualization is selecting the streamlines
-for visualization.
-Rendering too many streamlines clutters the visualization and makes
-features of the field difficult to identify. 
-Rending too few streamlines causes viewers to completely miss features
-of the flow field not rendered. 
+A major challenge in streamline visualization is selecting the streamlines for visualization.
+Rendering too many streamlines clutters the visualization and makes features of the field difficult to identify. 
+Rending too few streamlines causes viewers to completely miss features of the flow field not rendered. 
 
 The fractal dimension of a streamline represents its space-filling properties.
-To identify complex or interesting streamlines, 
-we build a regular grid of scalar values 
-which represent the fractal dimension of streamlines around each grid vertex.
+To identify complex or interesting streamlines, we build a regular grid of scalar values which represent the fractal dimension of streamlines around each grid vertex.
 High fractal dimension indicates vortices or turbulent regions.
-We use this scalar grid both to filter streamlines by fractal dimension
-and to identify and visualize regions containing vortices and turbulence.
-We describe an interactive tool which allows for quick streamline selection
-and visualization of regions containing vortices and turbulence.
+We use this scalar grid both to filter streamlines by fractal dimension and to identify and visualize regions containing vortices and turbulence.
+We describe an interactive tool which allows for quick streamline selection and visualization of regions containing vortices and turbulence.
+\\
+\begin{classification}
+\CCScat{Computer Graphics}{I.3.3}{Picture/Image Generation}{Line and curve generation}
+\end{classification}
+
 \end{abstract}
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
@@ -337,9 +337,9 @@ and visualization of regions containing vortices and turbulence.
 
 A vector field in 3D is a map $f: \Rthree \Rightarrow \Rthree$.
 A flow field is a specific type of vector field that represents the flow of some fluid.
-Each point in a 3D flow field represents the direction and rate of mass transport of a flow.
+Each point in a flow field is a vector that represents the direction and rate of mass transport of a flow.
 Flow fields are used in several different fields of science and engineering.
-They can be used to represent weather patterns, air flow during wind tunnel tests, or blood flow.
+They can be used to model large scale simulations such as atomospheric behavior, air flow during wind tunnel tests, or blood flow.
 Flow field data sets contain several different features, such as vortices, and have regions with different types of flow behavior.
 Visualizing these different regions and features is crucial to understanding the flow data.
 
@@ -355,13 +355,13 @@ Such a measurement allows for filtering to remove clutter while still retaining 
 Additionally, this measurement allows for not only complexity measurements to be assigned to the streamlines, but also to the flow field itself.
 We construct a scalar grid with values that are representative of the complexity of the streamlines in some nearby neighborhood.
 This scalar field allows us to easily identify which regions of the flow field are complex.
-Lastly, we apply a variety of interactive visualization techniques to the scalar field to allow the user different views of the data.
+Lastly, we apply a variety of interactive visualization techniques to the scalar field to allow the user different insights on the flow data.
 
 \section{Related Work}
 
-There has already been a considerable amount of work done in streamline filtering and flow field feature identification, but many of these methods require prerequiste knowledge about the flow field or depend on restrictive definitions of such features.
+There has already been a considerable amount of work done in streamline filtering and flow field feature identification, but many of these methods require prerequiste knowledge of the flow field or depend on restrictive definitions of features.
 Streamline seeding in 2D or on surfaces in 3D is discussed in \cite{turk}, \cite{mao}, and \cite{mebarki}.
-While these techniques create clear and evenly spaced streamlines visualizations for surfaces, they are difficult to generally extend into 3D.
+While these techniques create clear and evenly spaced streamlines visualizations for surfaces, they are difficult to extend into a general 3D space.
 
 McLoughlin et al. \cite{mcloughlin} seek to reduce streamline clutter by requiring a predefined rake and then removing streamlines along that rake that exhibit significant amounts of similarity to reduce redundancy and clutter.
 View points of streamlines are evaluated in \cite{marchesin} by analyzing the amount of occlusion present in a viewpoint.
@@ -369,7 +369,7 @@ Streamline methods based on concepts of entropy are discussed in \cite{shen} and
 
 Critical points of the flow field are analyzed in \cite{ye} and different seeding strategies are used depending on the behavior near the critical points.
 In \cite{salzbrunn}, various definitions are constructed for different flow field features and the features are searched for in the flow field.
-Similarly, various features are defined in \cite{heiberg} and the vectors of the flow field are examined to see if they meet the requirements of various properties.
+Similarly, various features such as vortices are defined in \cite{heiberg} and the vectors of the flow field are examined to see if they meet requirements of the properties.
 In all \cite{sadarjoen1999}, \cite{sadarjoen1998}, and \cite{zhong} features of a vortex are defined and then searched for in the flow field.
 \cite{mahrous} does segment the flow field generally, but this method does not supply a way of quantifying the complexity of flow field regions.
 
@@ -382,16 +382,16 @@ Using the box counting ratio, we are able to both have a general definition of c
 
 \section{Box Counting Ratio} \label{sec:bcr}
 
-Khoury and Wenger \cite{khoury} defined a box counting ratio approximation based on fractal dimensions in a previous work on examining the properties of isosurfaces using fractal dimensions.
-Depending on how a set fills a space, the calculated box counting ratio of the set is a real number between 0 and 3 for- a space filling fractal in 3D.
+Khoury and Wenger \cite{khoury} defined a box counting ratio approximation based on fractal dimensions in a previous work on examining properties of isosurfaces using fractal dimensions.
+Depending on how a set fills a space, the calculated box counting ratio of the set is a real number between 0 and 3 for a space filling fractal in 3D.
 The box counting ratio of a set S is defined as:
-\begin{equation} dim(S) = \log_2\frac{N(\frac{\epsilon}{2})}{N(\epsilon)}\end{equation}
-where $N(\epsilon)$ in this case is simply the number of boxes that the set will intersect on a fixed grid.
+\begin{equation} dim_{\epsilon}(S) = \log_2\frac{N_{\epsilon}(S)}{N_{2\epsilon}(S)}\end{equation}
+where $N_{x}(S)$ is the number of boxes that the set $S$ will intersect on a fixed grid that has boxes with edge lengths of $x$.
 
 We then measure the box counting ratio of the streamlines by defining a fixed grid, counting the number of boxes of widths $\frac{\epsilon}{2}$ and ${\epsilon}$ that a streamline intersects, and then solving for the final box counting dimension.
 With this new formula, we expect that the straight and simple streamlines will have a fractal dimension near 1, as they do not have any space filling properties.
-As the streamline becomes more complex and fills a 3D region more densely, we expect the fractal dimension to increase exceed 2.
-These measurements are illustrated in Fig. \ref{fig:box_counting_calcs}
+As the streamline becomes more complex and fills a 3D region more densely, we expect the fractal dimension to increase towards 3.
+These measurements are illustrated in 2D examples in Figure \ref{fig:box_counting_calcs}
 
 \begin{figure}[h]
         \centering
@@ -403,36 +403,36 @@ These measurements are illustrated in Fig. \ref{fig:box_counting_calcs}
                         \small \centering
                         \includegraphics[height = .95\linewidth]{Images/spiral.jpg} \\ (b) complex streamline
                 \end{minipage}
-        \caption{Example of box counting ratio calculations on streamlines in 2D. (a) is calculated to have a box counting ratio of  $\log_2\frac{12}{5} = 1.26$ while the more complex line (b) is calculated to have a box counting ratio of $\log_2\frac{29}{8} = 1.86$.}
+        \caption{Examples of the box counting ratio measuring streamline complexity in 2D. (a) is calculated to have a box counting ratio of  $\log_2\frac{12}{5} = 1.26$ while the more complex line (b) is calculated to have a box counting ratio of $\log_2\frac{29}{8} = 1.86$.}
         \label{fig:box_counting_calcs}
 \end{figure}
 
 \section{Streamline Complexity Grid} \label{sec:scg}
 
-The streamline complexity grid identifies the local complexity of a streamline passing through each grid voxel.
-It is a scalar grid with values reprensentative of the complexity of the flow behavior in a nearby region.
-The streamline complexity grid is constructed in the follow manner.
+The streamline complexity grid, $\phi : \Rthree \Rightarrow \R$, is a scalar grid on top of an input flow field with a spacing of $2l$ between each point. 
+Each scalar value quantifies the complexity of the flow behavior in a region near each point using the local box-counting ratio.
 
-For each grid point $p$ in a vector field $f: \Rthree \Rightarrow \Rthree$,
-let $\zeta_p$ be a streamline passing through $p$.
-Define $\phi_w(p)$ as the local box counting ratio of $\zeta_p$
-in a $\gDim{w}$ region around $p$,
-where boxes have edge lengths $l$ and $2l$.
-Function $\phi_w$ defines a scalar field on the grid points of $f$.
-The scalar $\phi_w(p)$ represents the complexity of a streamline through $p$ in a $\gDim{w}$ neighborhood of $p$.
-We call the scalar field $\phi_w$, the streamline complexity field of $f$.
+The local box-counting ratio only considers a portion of the streamline to better capture features along the streamline and is calculated in the following manner.
+Let $\zeta$ be a streamline generated from the flow field and let $B_{p}$ be a cube centered at point $p$ with edge lengths $4l \dot w$.
+Then the local box-counting ratio of $\zeta$ at $p$ is $dim_{w}(\zeta \cap B_{p})$.
+Additionally, if the value $N_{w}(\zeta \cap B_{p})$ during the local box-counting ratio is below a cutoff $c$, then we discard this measurement.
+We implement this cutoff to ensure that enough of a streamline is being examined to calculate a stable measurement.
 
-To compute the local box counting ratio of $\zeta_v$ in a $\gDim{w}$ region centered at $v$, we take a subset of the streamline, $\zeta_s$, that is included in the portion of $\zeta_v$ that is within the $\gDim{w}$ region.
-The box counting ratio of the streamline in that window is then computed using the previously described algorithm.
-If the streamline intersects too few boxes in the box counting ratio, then the box counting ratio is unreliable and we set the box counting ratio value to 1.
+To generate the values for the streamline complexity grid, streamlines must be generated to properly sample the vector field.
+Streamlines are generated in a manner so that each grid voxel has at least five streamlines intersecting it that also meet the required cutoff in the local box-counting ratio calculation.
+For each grid point $p$ and generate a new streamline $\zeta_{p}$ if the voxel $v_{p}$ does not meet the previous requirement.
+If streamline $\zeta_{p}$ was generated from $p$, find all voxels $v_{q}$ that $\zeta_{p}$ intersects.
+If $\zeta_{p}$ meets the cutoff requirement and less than five streamlines have not yet been stored for $v_p$, store $\zeta_p$ as one of the streamlines for $v_p$.
+At the end of this process, each voxel in the streamline complexity grid will be associated with five streamlines that intersect it.
+(This is not always true in some extreme cases. Should I discuss what happens if no streamlines can be stored for a voxel?)
 
-To construct a scalar grid representing the streamline complex field of $f$, a set of streamlines are generated so that each voxel is intersected by at least one streamline.
-The first streamline $\zeta_p$ to intersect voxel $v$ of grid point $p$ is assigned to be the streamline that is used for the scalar complexity calculation.
-Once all points $p$ have an assigned streamline, $\phi_w(p)$ is evaluated for each point.
+To calculate the final value $\phi(p)$, take the five streamlines associated with $v_{p}$ and calculate the local box-counting ratio of each streamlines at $p$ and record the median value.
+Additionally, discard all other streamlines associated with voxel $v_p$ other than the streamline whose local box-counting ratio at $p$ was the median value.
+Let this streamline be denoted as $p_{\zeta}$.
+The streamline complexity grid is filtered by averaging each point with its 26 neighbors.
 
-Additionally, a scalar value is associated with each streamline representing the streamline's complexity.
-For a single streamline $\zeta_v$, its local box counting dimension is measured at each voxel that it intersects.
-The highest of these local box counting dimension calculations is stored as the complexity value of $\zeta_v$ .
+%In addition to each grid point being assigned a complexity value, each streamline is assigned a complexity value.
+%The complexity value of a streamline $\zeta$ is recorded as the high local box-counting ratio calculated from that streamline and is denoted as $\psi(\zeta)$.
 
 The streamline complexity computations can be used in a variety of ways to filter streamlines of varying complexities or to provide a method of visualization for the flow field.
 
@@ -443,28 +443,28 @@ We describe the different techniques that are possible with the streamline compl
 
 \subsection{Streamline filtering by value}
 To remove streamlines in the flow field and to reduce clutter, the user can filter streamlines by their measured complexity value.
-The user is able to choose two values, $a$ and $b$ where $a < b$, and only display streamlines with a complexity between the chosen values. 
-Specifically, the streamline $\zeta_p$ will be displayed only if $a \leq \phi_w(p) \leq b$.
+The user is able to choose two values, $a$ and $b$ where $a < b$, and only display streamlines from voxels with a complexity between the chosen values. 
+The streamline $p_{\zeta}$ will be displayed only if $a \leq \phi(p) \leq b$.
 The constants allow the user to choose the level of streamline complexity that they will view.
 By choosing constants of values near 1, streamlines with a low box counting ratio and smooth flow will be displayed.
-By choosing constants of values above 2, streamlines with a relatively high box counting ratio and turbulent or complex flow will be displayed.
-Filtering by complexity value is shown in Fig. \ref{fig:value_filter}
+By choosing constants of values above 1, streamlines will begin to be filtered and the more complex regions of the flow field are highlighted.
+Filtering by complexity value is shown in Figure \ref{fig:value_filter}
 
 \begin{figure}[h]
         \centering
                 \begin{minipage}{0.30\linewidth}
                         \small \centering
-                       	\includegraphics[height = 1.1\linewidth]{Images/all_vtk.png}\\(a)
+                       	\includegraphics[height = 1.05\linewidth]{Images/all_equation.png}\\(a)
                 \end{minipage}
                 \begin{minipage}{0.30\linewidth}
                         \small \centering
-                        \includegraphics[height = 1.1\linewidth]{Images/filter_vtk.png}\\(b)
+                        \includegraphics[height = 1.05\linewidth]{Images/filter_equation.png}\\(b)
                 \end{minipage}
                 \begin{minipage}{0.30\linewidth}
                         \small \centering
-                        \includegraphics[height = 1.1\linewidth]{Images/max_vtk.png}\\(c)
+                        \includegraphics[height = 1.05\linewidth]{Images/max_equation.png}\\(c)
                 \end{minipage}
-        \caption{Example of the streamline filtering techniques. (a) contains the clutter view of all streamlines generated. (b) filters streamlines below a certain complexity value. (c) also filters streamlines by local maximums.}
+        \caption{Example of the streamline filtering techniques. (a) contains the clutter view of all 5000 streamlines generated. (b) filters streamlines below a certain complexity value to only display 110 streamlines. (c)  filters streamlines by local maximums to show 8 streamlines.}
         \label{fig:value_filter}
 \end{figure}
 
@@ -472,29 +472,29 @@ Filtering by complexity value is shown in Fig. \ref{fig:value_filter}
 A significant amount of clutter in the streamline display will remain if additional filtering methods are not considered.
 Several streamlines in the visualization will be visually similar or provide redundant information.
 We are able to only show the local maximum streamlines to filter streamlines that all represent a single region or feature of the flow.
-Local maximum filtering will show streamline $v_\zeta$ only if for all of the 8 points $q$ that directly neighbor $v$ on the complexity grid, $\phi_w(v) > \phi_w(q)$.
+Local maximum filtering will show streamline $p_\zeta$ at point  $p$ only if for each $q$, where $q$ is one of the 8 neighbors of $p$, $\phi(v) > \phi(q)$.
 This method allows for single streamlines representatives to be shown for each feature or region rather than several, cluttered streamlines.
 
 \subsection{Complexity plane}
-A colored plane can be used to allow the user to visualize the scalar complexity grid, $\phi_w$, directly.
-A color gradient from blue to green to red is able to be defined and mapped to values in the range 0 to 3, for each of the possible box counting dimensions ratios.
+A colored plane can be used to allow the user to visualize the scalar complexity grid, $\phi$, directly.
+A color gradient from blue to white to red is able to be defined and mapped to values in the range 0 to 3, for each of the possible box counting dimensions ratios.
 Low scalar values will be displayed as blue colors, while high scalar values will be displayed as red colors.
 A plane is then defined on the scalar complexity grid and each point on the plane is colored from this defined color gradient.
 The user is able to control the plane through the scalar complexity grid to identify regions varying complexity in the grid.
-Once regions of interest are identified through the color plane, the user can display streamlines near that region to understand its behavior.
+Once regions of interest are identified through the colored plane, the user can display streamlines near that region to understand its behavior.
 Additionally, streamlines seeded from the plane are able to be visualized.
 The user is able to view different ratios of both high complexity and low complexity streamlines seeded from the plane.
-An example of the plane visualizations are shown in Fig. \ref{fig:plane}.
+An example of the plane visualizations are shown in Figure \ref{fig:plane}.
 
 \begin{figure}[h]
         \centering
                 \begin{minipage}{0.45\linewidth}
                         \small \centering
-                        \includegraphics[height = 0.75\linewidth]{Images/plane_crop.png}\\(a)
+                        \includegraphics[height = 1\linewidth]{Images/plane_equation.png}\\(a)
                 \end{minipage}
                 \begin{minipage}{0.45\linewidth}
                         \small \centering
-                        \includegraphics[height = 0.75\linewidth]{Images/plane_line_crop.png}\\(b)
+                        \includegraphics[height = 1\linewidth]{Images/plane_equation_lines.png}\\(b)
                 \end{minipage}
         \caption{Example visualizations using the colored plane. (a) contains the plane indicating the regions of high complexity. (b) contains the high complexity lines near the defined plane.}
         \label{fig:plane}
@@ -503,28 +503,28 @@ An example of the plane visualizations are shown in Fig. \ref{fig:plane}.
 \subsection{Isosurfaces:} 
 An isosurface can be used to highlight regions of the flow field with a high complexity.
 An isosurface, which is defined by
-\begin{equation} \{ x \mid \phi_w(x) = \sigma \}\end{equation}
-where $\sigma$ is the isovalue and $\phi_w$ is the streamline complexity field, will separate all scalar values above $\sigma$ from the values below $\sigma$ on the streamlines complexity.
+\begin{equation} \{ x \mid \phi(x) = \sigma \}\end{equation}
+where $\sigma$ is the isovalue and $\phi$ is the streamline complexity field, will separate all scalar values above $\sigma$ from the values below $\sigma$ on the streamlines complexity.
 This isosurface will enclose the regions of streamlines with a fractal dimension higher than the $\sigma$ value and provide a simple way to identify regions of a defined complexity.
 At particularly high $\sigma$ values, the isosurface will only enclose vortices and turbulent features of the flow field that the user may have otherwise missed.
 
 \subsection{Streamline gradient magnitudes:}
 The gradient magnitudes of the streamline complexity grid can be calculated to create a new gradient magnitude scalar grid $\phi_g$.
-The scalar $\phi_g(x)$ is given by $\| \nabla \phi_w(x) \|$.
+The scalar $\phi_g(x)$ is given by $\| \nabla \phi(x) \|$.
 Another isosurface can be used to visualization the function $\phi_g$ to identify regions of high change of turbulence or complexity.
 Vortices in the flow field tend to have high complexity values recorded near their centers, with values quickly decreasing towards their boundaries.
 When a high isovalue is chosen for the gradient magnitude isosurface's isovalue, the isosurface will highlight these isolated regions of turbulence or turbulent regions that quickly become smooth.
-Example of isosurfaces of the scalar complexity values and gradient magnitudes are shown in Fig. \ref{fig:iso}.
+Example of isosurfaces of the scalar complexity values and gradient magnitudes are shown in Figure \ref{fig:iso}.
 
 \begin{figure}[h]
         \centering
                 \begin{minipage}{0.47\linewidth}
                         \small \centering
-                        \includegraphics[height = 1.2\linewidth]{Images/iso_crop.png}\\(a)
+                        \includegraphics[height = 1\linewidth]{Images/iso_equation.png}\\(a)
                 \end{minipage}
                 \begin{minipage}{0.47\linewidth}
                         \small \centering
-                        \includegraphics[height = 1.2\linewidth]{Images/grad_crop.png}\\(b)
+                        \includegraphics[height = 1\linewidth]{Images/grad_iso_equation.png}\\(b)
                 \end{minipage}
         \caption{Example visualizations with isosurfaces. (a) contains the scalar value isosurface enclosing high complexity regions. (b) contains the gradient isosurface enclosing regions of high complexity change.}
         \label{fig:iso}
@@ -532,11 +532,11 @@ Example of isosurfaces of the scalar complexity values and gradient magnitudes a
 
 \section{Results} \label{sec:examples}
 
-In this section we will demonstrate how the previous described techniques can enhance the visualization of large flow field data sets.
+In this section we will demonstrate how the previously described techniques can enhance the visualization of large flow field data sets.
 Explanations and figures are given to show the advantages and features given by our algorithms.
 
 The algorithm was implemented in C++ using The Visualization Toolkit (VTK) across two separate programs.
-The first program has been created to generate streamlines, computer complexity measurements, and compute the streamline complexity grid and then output this information.
+The first program has been created to generate streamlines, compute complexity measurements, and compute the streamline complexity grid and then output this information.
 Then another program takes the output files as input and allows the user to interact with the streamlines and the streamline complexity grid in real-time.
 
 The previously described algorithms and techniques are applied to the Solar Plume data set.
@@ -548,22 +548,22 @@ These regions are able to be identified and highlighted by our algorithm.
 A filtering of the streamlines produced by considering the complexity measurements of the streamline given by our algorithm along with isosurfaces is displayed in Fig. \ref{fig:plume_lines}.a.
 The filtering drastically reduces the clutter in the visualization and makes the regions of interest much more clear to the user.
 The streamlines are also colored by complexity, with the red streamlines being the most complex and often contain vortices and green streamlines being less complex.
-The aqua isosurface in this rendering is set to a value near 1.6 to enclose the complex regions of the line.
+The aqua isosurface in this rendering is set to a value near ???1.3??? to enclose the complex regions of the line.
 Additionally, the purple isosurface is the gradient isosurfaces and highlights regions around vortices that have a high change in complexity.
 
 A plane with nearby streamlines is shown in Fig. \ref{fig:plume_lines}.b.
-The color plane allows the viewer to see that the Solar Plume consists of a mostly smooth behavior towards its center and then becomes more turbulent near to edges.
+The colored plane allows the viewer to see that the Solar Plume consists of a mostly smooth behavior towards its center and then becomes more turbulent near to edges.
 Rather than manually attempting to identify which regions of the flow field exhibit specific types of behavior, this visualization allows the viewer to identify these regions quickly.
 
 \begin{figure}[h]
         \centering
                	\begin{minipage}{0.47\linewidth}
                       	\centering \small
-                        \includegraphics[height = 2\linewidth]{Images/plume_grad_crop.png}\\(a) Solar Plume filtered
+                        \includegraphics[height = 2\linewidth]{Images/plume_iso.png}\\(a) Solar Plume filtered
                 \end{minipage}
                 \begin{minipage}{0.47\linewidth}
                         \centering \small
-                        \includegraphics[height = 2\linewidth]{Images/plume_plane_crop.png}\\(a) Solar Plume with plane
+                        \includegraphics[height = 2\linewidth]{Images/plume_plane.png}\\(a) Solar Plume with plane
                 \end{minipage}
         \caption{Example of how filtering increases the visibility of flow field features in the Solar Plume data set. (a) displays the set of streamlines filtered by complexity measurements from an original data set. In (b), the plane allows the viewer to see the different regions of high and low complexity.}
         \label{fig:plume_lines}
@@ -572,8 +572,8 @@ Rather than manually attempting to identify which regions of the flow field exhi
 \section{Summary}
 
 In this paper we proposed a method of filtering streamlines and identifying complex regions of the flow field.
-We described a method of box counting dimension for streamlines to identify the streamlines that have a space filling pattern and are complex.
-Then using this box counting dimension, we are able to make a streamline complexity grid that has scalar values to represent the complexities of different regions.
+We described a method of quantifying flow field complexity by measuring the box-counting ratio of streamlines seeded from the flow field.
+Then using this box-counting dimension, we are able to make a streamline complexity grid that has scalar values to represent the complexities of different regions.
 The streamline complexity grid along with the streamline box counting dimensions allow for many visualization techniques such as filtering by local maximums and isosurfaces to allow the viewer to identify interesting parts of a flow field.
 We then applied these filtering methods and visualization techniques to a data set and showed how they created a quality visualization.
 
